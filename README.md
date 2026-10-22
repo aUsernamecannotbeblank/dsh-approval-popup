@@ -20,10 +20,15 @@
 
 要求：Windows 10/11，DSH Desktop，系统自带的 PowerShell 5.1。
 
-在 DSH 的「插件」设置里选择安装本地插件目录；或让 DSH Agent 执行：
+```powershell
+git clone https://github.com/aUsernamecannotbeblank/dsh-approval-popup.git
+```
+
+在 DSH 的「插件」设置里选择安装本地插件目录；或让 DSH Agent 执行
+（把路径换成克隆下来的目录）：
 
 ```text
-plugin_manager install_bundle target=D:\DSH.2\dsh-approval-popup
+plugin_manager install_bundle target=D:\path\to\dsh-approval-popup
 ```
 
 安装后本插件会自动挂载，无需重启。卸载后不会残留后台进程。
