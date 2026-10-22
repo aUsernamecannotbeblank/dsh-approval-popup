@@ -1,0 +1,9 @@
+- insert:
+    - id: dsh-approval-popup
+      name: dsh-approval-popup
+      config:
+        enabled: true
+        lang: zh
+        timeoutSec: 60
+        sound: false
+        focusWindow: false

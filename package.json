@@ -1,0 +1,33 @@
+{
+  "name": "dsh-approval-popup",
+  "version": "0.1.0",
+  "description": "Compact desktop approval card for DeepSeek Harness when the app is minimized or behind another window.",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./icon": "./icon.svg",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "index.js",
+    "scripts/popup.ps1",
+    "locale",
+    "icon.svg",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "approval",
+    "desktop",
+    "windows"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Approval Popup",
+    "description": "Shows a compact always-on-top card for tool approvals when DeepSeek Harness is minimized or behind another window."
+  }
+}
