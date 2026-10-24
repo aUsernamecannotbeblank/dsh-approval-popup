@@ -42,8 +42,9 @@ $toolName = ([string]$data.tool).Trim()
 if (-not $toolName) { $toolName = 'tool' }
 if ($toolName.Length -gt 80) { $toolName = $toolName.Substring(0, 80) }
 
+# Keep the complete approval text. Very long requests scroll inside the card
+# instead of being cut off.
 $reason = ([string]$data.reason).Trim()
-if ($reason.Length -gt 220) { $reason = $reason.Substring(0, 220) + [char]0x2026 }
 
 $timeoutSec = 0
 try { $timeoutSec = [int]$data.timeoutSec } catch { $timeoutSec = 0 }
@@ -223,6 +224,8 @@ $window.Topmost = $true
 $window.ResizeMode = 'NoResize'
 $window.SizeToContent = 'Height'
 $window.Width = 376
+# Let the card grow with the request text, but never past the usable desktop.
+$window.MaxHeight = [Math]::Max(260, [System.Windows.SystemParameters]::WorkArea.Height - 56)
 $window.WindowStartupLocation = 'Manual'
 $window.Left = 0
 $window.Top = 0
@@ -303,7 +306,8 @@ $title.TextTrimming = 'CharacterEllipsis'
 $title.Margin = New-Object System.Windows.Thickness 0, 10, 0, 0
 [void]$stack.Children.Add($title)
 
-# Reason (up to two lines; the full text stays available to the Web UI).
+# Full request text. It wraps to the card width and scrolls only when the
+# request is taller than the available desktop.
 if ($reason) {
   $detail = New-Object System.Windows.Controls.TextBlock
   $detail.Text = $reason
@@ -312,9 +316,15 @@ if ($reason) {
   $detail.TextWrapping = 'Wrap'
   $detail.LineHeight = 18
   $detail.LineStackingStrategy = 'BlockLineHeight'
-  $detail.MaxHeight = 37
-  $detail.Margin = New-Object System.Windows.Thickness 0, 4, 0, 0
-  [void]$stack.Children.Add($detail)
+
+  $detailScroll = New-Object System.Windows.Controls.ScrollViewer
+  $detailScroll.VerticalScrollBarVisibility = 'Auto'
+  $detailScroll.HorizontalScrollBarVisibility = 'Disabled'
+  $detailScroll.MaxHeight = [Math]::Max(120, $window.MaxHeight - 210)
+  $detailScroll.Padding = New-Object System.Windows.Thickness 0, 0, 4, 0
+  $detailScroll.Margin = New-Object System.Windows.Thickness 0, 4, 0, 0
+  $detailScroll.Content = $detail
+  [void]$stack.Children.Add($detailScroll)
 }
 
 function New-CardButton {

@@ -1,6 +1,6 @@
 {
   "name": "dsh-approval-popup",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Compact desktop approval card for DeepSeek Harness when the app is minimized or behind another window.",
   "type": "module",
   "main": "index.js",
